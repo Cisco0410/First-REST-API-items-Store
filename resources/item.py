@@ -13,7 +13,6 @@ class Item(Resource):
     @jwt_required()
     def get(self, name):
         item = ItemModel.find_by_name(name)
-
         if item:
             return item.json()
         return {'message': 'Item not found'}, 404
@@ -23,12 +22,12 @@ class Item(Resource):
             return {'message': 'Item exists'}, 400
 
         data = Item.parser.parse_args()
-        item = ItemModel(name, data['price'], data['store_id'])
+        item = ItemModel(name, **data)
 
         try:
             item.save_to_db()
         except:
-            return {"message": "An error occurred inserting the ItemModel."}, 500
+            return {"message": "An error occurred inserting the item"}, 500
         return item.json(), 201
 
     def delete(self, name):
@@ -55,4 +54,4 @@ class Item(Resource):
 
 class ItemList(Resource):
     def get(self):
-        return{'item': [item.json for item in ItemModel.query.all()]}
+        return{'items': [item.json() for item in ItemModel.query.all()]}
