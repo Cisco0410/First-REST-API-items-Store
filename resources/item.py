@@ -7,7 +7,7 @@ from security import authentication, identity
 class Item(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('price', type= float, required= True, help= "Don't leave blank")
-    parser.add_argument('store_id', type= int, required= True, help= "Every item needs store id")
+    parser.add_argument('store_id', required= True, help= "Every item needs store id")
 
 
     @jwt_required()
