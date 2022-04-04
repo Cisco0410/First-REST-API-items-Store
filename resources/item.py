@@ -22,7 +22,7 @@ class Item(Resource):
             return {'message': 'Item exists'}, 400
 
         data = Item.parser.parse_args()
-        item = ItemModel(name, **data)
+        item = ItemModel(name, data['item'])
 
         try:
             item.save_to_db()
