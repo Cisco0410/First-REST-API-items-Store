@@ -22,13 +22,12 @@ class Item(Resource):
             return {'message': 'Item exists'}, 400
 
         data = Item.parser.parse_args()
-        item = ItemModel(name, data**)
+        item = ItemModel(name, **data)
 
         try:
             item.save_to_db()
         except:
             return {"message": "An error occurred inserting the item"}, 500
-            
         return item.json(), 201
 
     def delete(self, name):
